@@ -1,7 +1,9 @@
 from setuptools import setup
 
 setup(
-    name='pre_commit_dummy_package',
-    version='0.0.0',
+    name='LicenseCheck',
+    version='0.0.1',
+    author='Axel Wegener',
+    scripts=['license_check.py'],
     install_requires=['pyyaml'],
 )

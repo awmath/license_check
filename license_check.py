@@ -87,7 +87,10 @@ if __name__ == "__main__":
     requirements = []
 
     # remove settings file from args (for pre-commit)
-    args.requirements.remove(DEFAULT_SETTINGS)
+    try:
+        args.requirements.remove(DEFAULT_SETTINGS)
+    except ValueError:
+        pass
     for file in args.requirements:
         requirements += [extract_requirement_module(line) for line in file_to_list(file)]
 
