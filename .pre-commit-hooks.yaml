@@ -1,0 +1,5 @@
+- id: license-check
+  name: PIP License Check
+  language: python
+  files: (requirements.*\.(in|txt)|.licenses.yaml)$
+  entry: \./license_check.py -v
