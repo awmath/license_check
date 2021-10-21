@@ -137,8 +137,9 @@ if __name__ == "__main__":
             results['fail'].update(dict.fromkeys(modules, lic))
 
     if args.verbose:
-
         print(json.dumps(results, indent=2))
 
     if results['fail']:
+        if not args.verbose:
+            print(json.dumps(results['fail'], indent=2))
         exit(1)
