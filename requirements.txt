@@ -1,2 +1,7 @@
+pre-commit
 pytest
 pytest-mock
+pytest-coverage
+black
+flake8
+isort
