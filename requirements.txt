@@ -1,5 +1,2 @@
-django # MIT
-tacl-extra # GPL
-iamnopackageatpypi # 404
-ignoreme
-gdfg
+pytest
+pytest-mock
