@@ -1,5 +1,7 @@
-django # MIT
-tacl-extra # GPL
-iamnopackageatpypi # 404
-ignoreme
-gdfg
+pre-commit
+pytest
+pytest-mock
+pytest-coverage
+black
+flake8
+isort

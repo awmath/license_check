@@ -5,4 +5,4 @@ disallowed: # disallowed licenses (supports regexp)
 ignored: # packages to be ignored
   - ignoreme
 missing: # add license to packages which couldn't be found via pypi's api
-  mock: BSD 2-Clause
+  iammissing: BSD 2-Clause
