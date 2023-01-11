@@ -1,8 +1,9 @@
 allowed: # allowed licenses (supports regexp)
   - BSD( [0-9]-Clause)?
+  - MIT License
+  - MIT
 disallowed: # disallowed licenses (supports regexp)
   - GNU General Public License.*
-ignored: # packages to be ignored
-  - ignoreme
-missing: # add license to packages which couldn't be found via pypi's api
-  mock: BSD 2-Clause
+ignored: [] # packages to be ignored
+missing:
+  pytest-coverage: MIT License # add license to packages which couldn't be found via pypi's api

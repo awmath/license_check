@@ -4,22 +4,30 @@
 import argparse
 import json
 import logging
-from collections import defaultdict
+import re
 
 import yaml
 
-from license_check import (
-    check_re_list,
-    extract_requirement_module,
-    file_to_list,
-    get_license_string,
-    re_compile_list,
-)
+from license_check import check_licenses
 
 logger = logging.getLogger()
 
 
 DEFAULT_SETTINGS = ".licenses.yaml"
+
+
+def file_to_list(filename):
+    with open(filename) as f:
+        results = [line for line in f.readlines() if not line.strip().startswith("#")]
+    return results
+
+
+def extract_requirement_module(line):
+    try:
+        return re.match("^[a-zA-Z0-9][a-z0-9A-Z-_]+", line)[0]
+    except TypeError:
+        return None
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -61,47 +69,7 @@ if __name__ == "__main__":
             extract_requirement_module(line) for line in file_to_list(file)
         ]
 
-    ignored = set(settings.get("ignored", []))
-
-    allowed = re_compile_list(filter(None, settings.get("allowed", [])))
-    disallowed = re_compile_list(filter(None, settings.get("disallowed", [])))
-
-    missing = settings.get("missing", {})
-
-    results = {
-        "ignored": [],
-        "success": {},
-        "fail": {},
-    }
-
-    to_check = defaultdict(list)
-    # get licenses
-    for module in filter(None, set(requirements)):
-        if module in ignored:
-            results["ignored"].append(module)
-            continue
-
-        try:
-            license_str = get_license_string(module)
-        except ValueError as e:
-            try:
-                # try correct with errata
-                license_str = missing[module]
-            except KeyError:
-                # give up
-                results["fail"][module] = str(e)
-                continue
-
-        to_check[license_str].append(module)
-
-    for lic, modules in to_check.items():
-        # first check forbidden licenses
-        if check_re_list(lic, disallowed):
-            results["fail"].update(dict.fromkeys(modules, lic))
-        elif check_re_list(lic, allowed):
-            results["success"].update(dict.fromkeys(modules, lic))
-        else:
-            results["fail"].update(dict.fromkeys(modules, lic))
+    results = check_licenses(settings, requirements)
 
     if args.verbose:
         print(json.dumps(results, indent=2))

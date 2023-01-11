@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import pytest
 
-from license_check import get_license_string, normalize_license
+from license_check import check_licenses, get_license_string, normalize_license
 
 
 def test_missing_version_info(mocker):
@@ -14,3 +14,13 @@ def test_license_string_empty():
     assert normalize_license(None) is None
     assert normalize_license("") is None
     assert normalize_license(" ") is None
+
+
+def test_empty_settings():
+    settings = {
+        "allowed": [],
+        "disallowed": [],
+        "ignored": [],
+        "missing": [],
+    }
+    check_licenses(settings, ["missing"])

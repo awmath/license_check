@@ -5,6 +5,6 @@ setup(
     name="LicenseCheck",
     version="0.0.1",
     author="Axel Wegener",
-    scripts=["license_check.py"],
+    scripts=["check_licenses.py"],
     install_requires=["pyyaml"],
 )

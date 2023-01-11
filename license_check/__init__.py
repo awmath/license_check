@@ -2,23 +2,11 @@
 import json
 import logging
 import re
+from collections import defaultdict
 from urllib import request
 from urllib.error import HTTPError
 
 logger = logging.getLogger(__name__)
-
-
-def file_to_list(filename):
-    with open(filename) as f:
-        results = [line for line in f.readlines() if not line.strip().startswith("#")]
-    return results
-
-
-def extract_requirement_module(line):
-    try:
-        return re.match("^[a-zA-Z0-9][a-z0-9A-Z-_]+", line)[0]
-    except TypeError:
-        return None
 
 
 def re_compile_list(patterns: list):
@@ -61,3 +49,49 @@ def get_license_string(module):
         raise ValueError("NO LICENSE")
 
     return license_str
+
+
+def check_licenses(settings, requirements: list) -> dict:
+    ignored = set(settings.get("ignored", []))
+
+    allowed = re_compile_list(filter(None, settings.get("allowed", [])))
+    disallowed = re_compile_list(filter(None, settings.get("disallowed", [])))
+
+    missing = settings.get("missing", {}) or {}
+
+    results = {
+        "ignored": [],
+        "success": {},
+        "fail": {},
+    }
+
+    to_check = defaultdict(list)
+    # get licenses
+    for module in filter(None, set(requirements)):
+        if module in ignored:
+            results["ignored"].append(module)
+            continue
+
+        try:
+            license_str = get_license_string(module)
+        except ValueError as e:
+            try:
+                # try correct with errata
+                license_str = missing[module]
+            except KeyError:
+                # give up
+                results["fail"][module] = str(e)
+                continue
+
+        to_check[license_str].append(module)
+
+    for lic, modules in to_check.items():
+        # first check forbidden licenses
+        if check_re_list(lic, disallowed):
+            results["fail"].update(dict.fromkeys(modules, lic))
+        elif check_re_list(lic, allowed):
+            results["success"].update(dict.fromkeys(modules, lic))
+        else:
+            results["fail"].update(dict.fromkeys(modules, lic))
+
+    return results
