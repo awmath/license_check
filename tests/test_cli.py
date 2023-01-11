@@ -6,7 +6,7 @@ import subprocess
 def test_success():
     result = subprocess.run(
         [
-            "./license_check.py",
+            "./check_licenses.py",
             "--settings=tests/license-settings.yaml",
             "tests/requirements/success.txt",
         ],
@@ -20,7 +20,7 @@ def test_success():
 def test_success_verbose():
     result = subprocess.run(
         [
-            "./license_check.py",
+            "./check_licenses.py",
             "--settings=tests/license-settings.yaml",
             "--verbose",
             "tests/requirements/success.txt",
@@ -38,7 +38,7 @@ def test_success_verbose():
 def test_fail():
     result = subprocess.run(
         [
-            "./license_check.py",
+            "./check_licenses.py",
             "--settings=tests/license-settings.yaml",
             "tests/requirements/fail.txt",
         ],
@@ -52,7 +52,7 @@ def test_fail():
 def test_fail_verbose():
     result = subprocess.run(
         [
-            "./license_check.py",
+            "./check_licenses.py",
             "--settings=tests/license-settings.yaml",
             "--verbose",
             "tests/requirements/fail.txt",
