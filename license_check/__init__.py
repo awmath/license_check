@@ -117,8 +117,10 @@ def get_license_strings(module):
 
     data = json.load(response)
     license_from_info = get_license_from_info(data)
-    licenses_from_classifiers = list(get_licenses_from_classifiers(data))
-
+    try:
+        licenses_from_classifiers = list(get_licenses_from_classifiers(data["info"]["classifiers"]))
+    except KeyError:
+        licenses_from_classifiers = []
     licenses = set(licenses_from_classifiers)
     if license_from_info:
         licenses.add(license_from_info)
@@ -127,6 +129,8 @@ def get_license_strings(module):
         msg = "NO LICENSE"
         raise ValueError(msg)
 
+    licenses = list(licenses)
+    licenses.sort()
     return licenses
 
 

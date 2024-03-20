@@ -47,7 +47,7 @@ def test_fail():
         check=False,
     )
     assert result.returncode == 1
-    assert json.loads(result.stdout.decode("utf-8")) == {"pytest": "MIT"}
+    assert json.loads(result.stdout.decode("utf-8")) == {"pytest": "MIT License"}
     assert result.stderr.decode("utf-8") == ""
 
 
@@ -65,7 +65,7 @@ def test_fail_verbose():
 
     data = json.loads(result.stdout.decode("utf-8"))
     assert result.returncode == 1
-    assert data["fail"] == {"pytest": "MIT"}
+    assert data["fail"] == {"pytest": "MIT License"}
     assert data["ignored"] == ["ignoreme"]
     assert data["success"] == {"django": "BSD-3-Clause", "iammissing": "BSD 2-Clause"}
     assert result.stderr == b""

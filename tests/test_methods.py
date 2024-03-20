@@ -45,7 +45,7 @@ def test_get_license_from_classifiers():
         "Development Status :: 3 - Alpha",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
-        "License :: OSI Approved :: Something License",
+        "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3.10",
@@ -61,5 +61,5 @@ def test_get_license_from_classifiers():
 
     licenses = list(get_licenses_from_classifiers(classifiers))
     assert "MIT License" in licenses
-    assert "Something License" in licenses
+    assert "BSD License" in licenses
     assert len(licenses) == 2
