@@ -92,7 +92,7 @@ def get_licenses_from_classifiers(classifiers: list[str]) -> list[str]:
         License strings extracted from the classifiers that start with "License :: OSI Approved".
     """
     for classifier in classifiers:
-        if classifier.startswith("License :: OSI Approved"):
+        if classifier.startswith("License :: OSI Approved") and classifier.strip() != "License :: OSI Approved":
             yield classifier.split("::")[-1].strip()
 
 

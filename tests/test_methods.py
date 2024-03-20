@@ -46,6 +46,7 @@ def test_get_license_from_classifiers():
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "License :: OSI Approved :: BSD License",
+        "License :: OSI Approved",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3.10",
