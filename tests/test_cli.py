@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import json
 import subprocess
 
@@ -11,6 +10,7 @@ def test_success():
             "tests/requirements/success.txt",
         ],
         capture_output=True,
+        check=False,
     )
     assert result.returncode == 0
     assert result.stdout == b""
@@ -26,6 +26,7 @@ def test_success_verbose():
             "tests/requirements/success.txt",
         ],
         capture_output=True,
+        check=False,
     )
     data = json.loads(result.stdout.decode("utf-8"))
     assert result.returncode == 0
@@ -43,6 +44,7 @@ def test_fail():
             "tests/requirements/fail.txt",
         ],
         capture_output=True,
+        check=False,
     )
     assert result.returncode == 1
     assert json.loads(result.stdout.decode("utf-8")) == {"pytest": "MIT"}
@@ -58,7 +60,9 @@ def test_fail_verbose():
             "tests/requirements/fail.txt",
         ],
         capture_output=True,
+        check=False,
     )
+
     data = json.loads(result.stdout.decode("utf-8"))
     assert result.returncode == 1
     assert data["fail"] == {"pytest": "MIT"}
