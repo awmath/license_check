@@ -14,25 +14,22 @@ repos:
           - autoflake==1.4
         files: \.py$
         exclude: "migrations"
-        args: ["--remove-all-unused-imports", "--expand-star-imports"]
-  - repo: https://github.com/PyCQA/isort
-    rev: 5.10.1
-    hooks:
-      - id: isort
-        exclude: "migrations"
-        args: ["--quiet"]
+        args:
+          [
+            "--expand-star-imports",
+          ]
 
-  - repo: https://github.com/psf/black
-    rev: 22.3.0
-    hooks:
-      - id: black
 
-  - repo: https://github.com/pycqa/flake8
-    rev: "4.0.1" # pick a git hash / tag to point to
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.3.3
     hooks:
-      - id: flake8
-        additional_dependencies: [pandas-vet==0.2.1, flake8-pytest-style==1.6.0]
-
+      - id: ruff
+        args: [--fix, --show-fixes]
+      - id: ruff-format
+        alias: ruff-format-check
+        name: ruff-format-check
+        args: [--check]
+      - id: ruff-format
   - repo: https://github.com/asottile/pyupgrade
     rev: v2.32.1
     hooks:
@@ -54,4 +51,3 @@ repos:
       - id: check-yaml
       - id: check-docstring-first
       - id: check-executables-have-shebangs
-      - id: fix-encoding-pragma

@@ -1,0 +1,37 @@
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint.extend-per-file-ignores]
+"**/{tests/**/*.py,conftest.py}" = ["PLR2004", "S311", "PD901", "N803", "S", "SLF", "N", "PLR0913", "D"]
+
+[tool.ruff.lint]
+select = [
+    "E", # pycodestyle errors
+    "W", # pycodestyle warnings
+    "F", # pyflake
+    "D", # pydocstyle
+    "S", # flake8-bandit
+    "N", # pep8 naming
+    "PIE", # flake8-pie
+    "C90", # mccabe
+    "UP", # pyupgrade
+    "A", # flake8
+    "B", # flake8-bugbear
+    "DJ", # flake8-django
+    "EM", # error messages
+    "G", # logging format
+    "PT", # flake8-pytest-style
+    "RET", # return rules
+    "SLF", # private member access
+    "SIM", # flake8-simplify
+    "PD", # pandas-vet
+    "PL", # pylint
+    "T20", # prints
+    "C4", # flake8-comprehensions
+    "D401", # no imperative mood
+    "I", # isort
+    ]
+ignore = ["D401"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"

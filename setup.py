@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-
+"""Module setup."""
+
 from setuptools import setup
 
 setup(
